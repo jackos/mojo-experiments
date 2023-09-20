@@ -2,6 +2,12 @@ from python import Python
 
 
 fn main() raises:
-    Python.add_to_path(".env/lib/python3.11/site-packages")
     let requests = Python.import_module("requests")
-    print(requests)
+
+    let response = requests.get('https://cat-fact.herokuapp.com/facts/random')
+
+    if response.status_code == 200:
+        let fact = response.json()['text']
+        print(fact)
+    else:
+        print('Failed to fetch cat fact')
